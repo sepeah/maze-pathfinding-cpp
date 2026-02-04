@@ -6,8 +6,6 @@ A terminal-based maze generator and solver featuring the **newt** companion.
 
 
 <img width="379" height="349" alt="maze" src="https://github.com/user-attachments/assets/f8a16068-c7da-4f8e-b07c-c3631656b610" />
-<img width="379" height="349" alt="maze" src="https://github.com/user-attachments/assets/f8a16068-c7da-4f8e-b07c-c3631656b610" />
-
 
 ## Features
 
