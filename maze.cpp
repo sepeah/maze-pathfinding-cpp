@@ -45,7 +45,7 @@ void Maze::print_original() const {
                 std::cout << c;
             }
         }
-        std::cout << "\n\n";
+        std::cout << "\n";
     }
 }
 
@@ -99,7 +99,7 @@ void Maze::print_solution() const {
                 std::cout << c;
             }
         }
-        std::cout << "\n\n";
+        std::cout << "\n";
     }
 }
 
