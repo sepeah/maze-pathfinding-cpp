@@ -1,13 +1,28 @@
+/*
+ * Author: Sepe Ahtosalo
+ * Date: February 13, 2026
+ * 
+ * The Guild - A test for a simple Terminal-Based Game
+ * 
+ * A basic roguelike-style game featuring:
+ * - Real-time character movement with WASD controls
+ * - Dynamic room descriptions based on player position
+ * - ASCII-based map visualization
+ * - Cross-platform screen clearing using ANSI escape sequences
+ * 
+ * The player explores a tavern 
+ */
+
 #include <iostream>
 #include <vector>
-#include <conio.h>   // for _getch()
+#include <conio.h>   // _getch()
 
 std::string getRoomDescription(int x, int y) {
     if (x < 19 && x >0 && y < 4) {
         return "A cosy tavern, but you get strange looks and the patrons seem unfriendly.";
     }
     else if (x > 18 && y < 4) {
-        return "This seems to be a private area. A scarfaced old man glares at you from the corner.";
+        return "This seems to be a private area. A scar-faced old man glares at you from the corner.";
     }
     else {
         return "It's still raining, you REALLY don't want to go out.";
@@ -28,25 +43,30 @@ int main() {
     int py = 2;   // player Y
 
     while (true) {
-        system("cls");  // clear screen
-
-        // Draw map + player
+        // Build entire screen in memory first to reduce flashing
+        std::string screen = "\033[2J\033[H";  // Clear screen and move to top
+        
+        // Build map + player in memory
         for (int y = 0; y < map.size(); y++) {
             for (int x = 0; x < map[y].size(); x++) {
                 if (x == px && y == py)
-                    std::cout << '@';
+                    screen += '@';
                 else
-                    std::cout << map[y][x];
+                    screen += map[y][x];
             }
-            std::cout << "\n";
+            screen += "\n";
         }
-        // Status panel
-std::cout << "\n" << std::string(40, '=') << std::endl;  // Separator line
-std::cout << "LOCATION: " << getRoomDescription(px, py) << std::endl;
-std::cout << "POSITION: (" << px << ", " << py << ")" << std::endl;
-std::cout << "HEALTH: 100/100" << std::endl;
-std::cout << std::string(40, '=') << std::endl;
-std::cout << "Commands: WASD=Move, Q=Quit" << std::endl;
+        
+        // Build status panel in memory
+        screen += "\n" + std::string(40, '=') + "\n";
+        screen += getRoomDescription(px, py) + "\n";
+        screen += "POSITION: (" + std::to_string(px) + ", " + std::to_string(py) + ")\n";
+        screen += "HEALTH: 100/100\n";
+        screen += std::string(40, '=') + "\n";
+        screen += "Commands: WASD=Move, Q=Quit\n";
+        
+        // Output everything at once
+        std::cout << screen << std::flush;
 
 
         // Read key
